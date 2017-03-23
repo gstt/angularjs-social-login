@@ -187,17 +187,17 @@ socialLogin.directive("fbLogin", function($rootScope, social, socialLoginService
 					});
 					return deferred.promise;
 				}
-				FB.getLoginStatus((response) => {
+				FB.getLoginStatus(function(response){
 					if(response.status === "connected"){
-						fetchUserDetails().then((userDetails) => {
+						fetchUserDetails().then(function(userDetails){
 							userDetails["token"] = response.authResponse.accessToken;
 							socialLoginService.setProvider("facebook");
 							$rootScope.$broadcast('event:social-sign-in-success', userDetails);
 						});
 					}else{
-						FB.login((response) => {
+						FB.login(function (response){
 							if(response.status === "connected"){
-								fetchUserDetails().then((userDetails) => {
+								fetchUserDetails().then( function (userDetails){
 									userDetails["token"] = response.authResponse.accessToken;
 									socialLoginService.setProvider("facebook");
 									$rootScope.$broadcast('event:social-sign-in-success', userDetails);
